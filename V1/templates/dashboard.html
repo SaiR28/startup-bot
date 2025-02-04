@@ -109,7 +109,19 @@
         let currentPage = 1;
         const entriesPerPage = 10;
         let allData = [];
-
+            // Function to download CSV from the server
+    async function downloadCSV() {
+        try {
+            const response = await fetch('/download-csv'); // Adjust this URL if necessary
+            const blob = await response.blob();
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'logs.csv'; // Name of the file you want to download
+            link.click();
+        } catch (error) {
+            console.error('Error downloading CSV:', error);
+        }
+    }
         async function fetchDashboardData() {
             try {
                 const response = await fetch('/api/dashboard-data');
