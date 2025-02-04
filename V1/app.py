@@ -14,7 +14,7 @@ templates = Jinja2Templates(directory="templates")
 
 # Define the 4 tracks with their eligibility criteria
 tracks = {
-    "NIDHI Prayas": """Eligibility: Indian entrepreneurs, with a technology-based startup at proof of concept stage. No age limit.It is a must for the startup to have a hardware product. The applicant must have a working prototype and must be at least 18 years of age. The startup should be from an incubator that is recognized by DST.""",
+    "NIDHI Prayas": """Eligibility: Indian entrepreneurs, with a technology-based startup at proof of concept stage. No age limit.It is a must for the startup to have a hardware product, cannot be software. The applicant must have a working prototype and must be at least 18 years of age. The startup should be from an incubator that is recognized by DST.""",
     "NIDHI EIR": """Eligibility: Indian citizens, at least 18 years old, with a technology-based idea or startup. They must not be involved in another full-time job or education program and must commit to full-time work on their startup idea. The idea should have a significant impact in its field and must be incubated at a recognized incubator.""",
     "NIDHI SSS": """Eligibility: Startups should have been incorporated within the last 2 years, be technology-based, and have a scalable product idea. The startup must be Indian-owned, and at least 51% of the shares should be held by Indian promoters. Startups must be registered at a recognized incubator. A business plan and technical competence are essential.""",
     "Startup India Seed Fund": """Eligibility: Startups must be registered with DPIIT, have been incorporated for no more than 2 years, and should be technology-driven with a scalable business model. The startup should not have received more than ₹10 lakh from any other government scheme, and it should be incubated at a recognized incubator or startup hub."""
@@ -52,13 +52,13 @@ def init_db():
 def classify_startup(brief: str):
     prompt = f"""
     You are an AI startup advisor. Your task is to analyze the startup's brief and rank the tracks from highest to lowest likelihood of eligibility.
-
+    deeply understand what the startup is doing and all of its nuasces and make sure you take into account all the eligibilty criterias such as hardware software etc 
     Here are the 4 tracks and their eligibility criteria:
     {tracks}
 
     Startup Brief: "{brief}"
 
-    Based on the brief, return only a ranked list of track names from highest to lowest likelihood. If no track is a fit, return "None".
+    Based on the brief, return only a ranked list of track names from highest to lowest likelihood,number them. If no track is a fit, return "None".
     Reply in a clean format, with only the track names, one per line,no extra commentary.
     """
 
@@ -70,8 +70,8 @@ def classify_startup(brief: str):
         completion = client.chat.completions.create(
             model="llama-3.1-8b-instant",  # Use the appropriate model
             messages=[{"role": "user", "content": prompt}],
-            temperature=1,
-            top_p=1,
+            temperature=0.5,
+            top_p=0.5,
             stream=True,
             stop=None,
         )

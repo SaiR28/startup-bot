@@ -137,7 +137,9 @@
                 console.error('Error fetching data:', error);
             }
         }
-
+        function formatTextWithNewlines(text) {
+    return text.replace(/\n/g, '<br>'); // Converts newlines to <br> for proper rendering
+}
         function updateTable() {
             const tableBody = document.getElementById('logsTableBody');
             tableBody.innerHTML = '';
