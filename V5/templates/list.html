@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Startup Funding Opportunities</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+    --black: #000000;
+    --white: #ffffff;
+    --gray: #666666;
+    --light-gray: #f5f5f5;
+    --border: 2px solid var(--black);
+    --radius: 0.5rem;
+    --hover-shadow: 0 20px 25px -5px rgba(0,0,0,0.1),
+                   0 10px 10px -5px rgba(0,0,0,0.04);
+    --card-bg: #ffffff;
+    --alt-card-bg: #fcfcfc;
+}
+
+body {
+    background-color: var(--light-gray);
+}
+
+.container {
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header with better spacing */
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 2.5rem;
+    background: linear-gradient(to right, var(--black) 0%, #333 100%);
+    border-radius: var(--radius);
+    color: var(--white);
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+}
+
+.subtitle {
+    font-size: 1.15rem;
+    opacity: 0.9;
+}
+
+/* Filters with responsive layout */
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1.2rem;
+    background: var(--white);
+    border: var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.filter-input {
+    flex: 1;
+    min-width: 200px;
+    padding: 0.75rem;
+    border: 2px solid #e0e0e0;
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+}
+
+.filter-input:hover,
+.filter-input:focus {
+    border-color: var(--black);
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.1);
+    outline: none;
+}
+
+/* Grid for the cards */
+.schemes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Scheme Cards - More compact & organized */
+.scheme-card {
+    border: var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    background-color: var(--card-bg);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.scheme-card:nth-child(even) {
+    background-color: var(--alt-card-bg);
+}
+
+.scheme-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--hover-shadow);
+}
+
+/* Organization Name */
+.organization {
+    color: var(--black);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.8;
+}
+
+/* Program Name */
+.program-name {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+}
+
+/* Focus Area Tags */
+.focus-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+}
+
+.focus-tag {
+    padding: 0.4rem 0.8rem;
+    background: var(--light-gray);
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--black);
+    border: 1px solid var(--gray);
+}
+
+/* Grant Amount */
+.grant-amount {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 0.5rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+/* Deadline */
+.deadline {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--black);
+    font-weight: 600;
+    padding: 0.4rem 0.8rem;
+    background: var(--light-gray);
+    border-radius: var(--radius);
+    font-size: 0.85rem;
+    margin-bottom: 1.2rem;
+}
+.email-gate {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+}
+
+.email-box {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.email-box h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.email-box p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: #666;
+}
+
+.email-box input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+}
+
+.email-box button {
+    width: 100%;
+    background: black;
+    color: white;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.email-box button:hover {
+    background: #333;
+}
+
+/* Apply Now Button */
+.apply-button {
+    padding: 0.7rem 1.3rem;
+    background: var(--black);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
+}
+
+.apply-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .header { padding: 2rem 1rem; }
+    .schemes-grid { grid-template-columns: 1fr; }
+}
+
+
+    </style>
+</head>
+<body>
+    <div id="emailGate" class="email-gate">
+        <div class="email-box">
+            <h2>Access Startup Funding Opportunities</h2>
+            <p>Enter your email to unlock the content.</p>
+            <form id="emailForm">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit">Unlock</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="container">
+        <header class="header">
+            <h1 class="title">Startup Funding Opportunities</h1>
+            <p class="subtitle">Discover and Apply for latest opportunities</p>
+        </header>
+
+        <section class="filters">
+            <div class="filter-group">
+                <label class="filter-label">Search</label>
+                <input type="text" class="filter-input" placeholder="Search by keywords...">
+            </div>
+            <div class="filter-group">
+                <label class="filter-label">Sector</label>
+                <select class="filter-input">
+                    <option value="">All Sectors</option>
+                    <option value="AI">AI</option>
+                    <option value="technology">Technology</option>
+                    <option value="healthcare">Healthcare</option>
+                    <option value="environment">Environment</option>
+                </select>
+            </div>
+           
+    
+        </section>
+
+        <div class="schemes-grid">
+
+            <!-- Add more cards here -->
+        </div>
+    </div>
+<!-- Add this right after the <body> tag -->
+
+    <script>document.addEventListener("DOMContentLoaded", () => {
+        const emailGate = document.getElementById("emailGate");
+        const emailForm = document.getElementById("emailForm");
+        let allSchemes = []; // Store all schemes for filtering
+    
+        // Filter input elements
+        const searchInput = document.querySelector('input[type="text"]');
+        const sectorSelect = document.querySelector('select');  // Modified selector
+        const statusSelect = document.createElement('select');
+        statusSelect.className = 'filter-input';
+        
+        // Add status filter to the filters section
+        const filtersSection = document.querySelector('.filters');
+        const statusFilterGroup = document.createElement('div');
+        statusFilterGroup.className = 'filter-group';
+        statusFilterGroup.innerHTML = `
+            <label class="filter-label">Status</label>
+        `;
+        statusSelect.innerHTML = `
+            <option value="">All Status</option>
+            <option value="open">Open</option>
+            <option value="closed">Closed</option>
+        `;
+        statusFilterGroup.appendChild(statusSelect);
+        filtersSection.appendChild(statusFilterGroup);
+    
+        // Check email gate
+        if (localStorage.getItem("emailSubmitted") === "true") {
+            emailGate.style.display = "none";
+            fetchSchemes();
+        } else {
+            emailForm.addEventListener("submit", handleEmailSubmission);
+        }
+    
+        // Add event listeners for filters
+        searchInput?.addEventListener('input', debounce(applyFilters, 300));
+        sectorSelect?.addEventListener('change', applyFilters);
+        statusSelect?.addEventListener('change', applyFilters);
+    
+        async function handleEmailSubmission(event) {
+            event.preventDefault();
+            const emailInput = event.target.querySelector("input[type='email']").value.trim();
+    
+            if (emailInput) {
+                try {
+                    const response = await fetch("http://localhost:8000/save-email", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ email: emailInput }),
+                    });
+    
+                    if (response.ok) {
+                        localStorage.setItem("emailSubmitted", "true");
+                        emailGate.style.display = "none";
+                        fetchSchemes();
+                    }
+                } catch (error) {
+                    console.error("Error submitting email:", error);
+                }
+            }
+        }
+    
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+    
+        function populateSectorDropdown(schemes) {
+            if (!sectorSelect) return;
+    
+            // Get unique sectors from all schemes
+            const sectors = new Set();
+            schemes.forEach(scheme => {
+                if (scheme.focus_area) {
+                    // Handle both array and string cases
+                    const areas = Array.isArray(scheme.focus_area) 
+                        ? scheme.focus_area 
+                        : scheme.focus_area.split(',').map(area => area.trim());
+                    
+                    areas.forEach(area => {
+                        if (area) sectors.add(area);
+                    });
+                }
+            });
+    
+            // Create dropdown options
+            const currentValue = sectorSelect.value; // Store current selection
+            const options = ['<option value="">All Sectors</option>'];
+            [...sectors].sort().forEach(sector => {
+                options.push(`<option value="${sector}" ${currentValue === sector ? 'selected' : ''}>${sector}</option>`);
+            });
+    
+            sectorSelect.innerHTML = options.join('');
+        }
+    
+        function applyFilters() {
+            const searchTerm = searchInput?.value.toLowerCase() || '';
+            const selectedSector = sectorSelect?.value || '';
+            const selectedStatus = statusSelect?.value || '';
+    
+            const filteredSchemes = allSchemes.filter(scheme => {
+                // Search filter
+                const matchesSearch = !searchTerm || 
+                    scheme.program?.toLowerCase().includes(searchTerm) ||
+                    scheme.organization?.toLowerCase().includes(searchTerm) ||
+                    (scheme.focus_area && typeof scheme.focus_area === 'string' && 
+                     scheme.focus_area.toLowerCase().includes(searchTerm));
+    
+                // Sector filter
+                const matchesSector = !selectedSector || (scheme.focus_area && (
+                    (Array.isArray(scheme.focus_area) && 
+                     scheme.focus_area.some(area => area.toLowerCase() === selectedSector.toLowerCase())) ||
+                    (typeof scheme.focus_area === 'string' && 
+                     scheme.focus_area.toLowerCase().includes(selectedSector.toLowerCase()))
+                ));
+    
+                // Status filter - Check both is_closed property and deadline
+                // Parse and validate the deadline date
+                let isExpired = false;
+                if (scheme.deadline && scheme.deadline !== "No Deadline") {
+                    const deadlineDate = new Date(scheme.deadline);
+                    // Check if we got a valid date
+                    if (!isNaN(deadlineDate.getTime())) {
+                        isExpired = deadlineDate < new Date();
+                    }
+                }
+                // Only consider it closed if explicitly marked as closed or has a valid expired deadline
+                const isClosed = scheme.is_closed === true || isExpired;
+                const matchesStatus = !selectedStatus || 
+                    (selectedStatus === 'open' ? !isClosed : 
+                     selectedStatus === 'closed' ? isClosed : true);
+    
+                return matchesSearch && matchesSector && matchesStatus;
+            });
+    
+            renderSchemes(filteredSchemes);
+        }
+    
+        async function fetchSchemes() {
+            try {
+                const response = await fetch("http://localhost:8000/schemes");
+                if (!response.ok) throw new Error("Failed to fetch schemes");
+    
+                const data = await response.json();
+                allSchemes = data.schemes || [];
+                
+                if (!Array.isArray(allSchemes)) {
+                    console.error("Expected an array but got:", allSchemes);
+                    return;
+                }
+    
+                // Populate sector dropdown after fetching schemes
+                populateSectorDropdown(allSchemes);
+                renderSchemes(allSchemes);
+            } catch (error) {
+                console.error("Error loading schemes:", error);
+            }
+        }
+    
+        function renderSchemes(schemes) {
+            const schemesGrid = document.querySelector(".schemes-grid");
+            if (!schemesGrid) {
+                console.error("Error: .schemes-grid not found in the DOM.");
+                return;
+            }
+    
+            schemesGrid.innerHTML = schemes.length ? '' : '<p class="no-results">No matching opportunities found</p>';
+    
+            schemes.forEach(scheme => {
+                const isExpired = scheme.deadline ? new Date(scheme.deadline) < new Date() : false;
+                const isClosed = scheme.is_closed || isExpired;
+                
+                const card = document.createElement("div");
+                card.className = `scheme-card ${isClosed ? 'closed' : ''}`;
+                
+                // Convert focus areas to tags
+                let focusAreaTags = '';
+                if (scheme.focus_area) {
+                    const areas = Array.isArray(scheme.focus_area) 
+                        ? scheme.focus_area 
+                        : scheme.focus_area.split(',');
+                        
+                    focusAreaTags = areas
+                        .map(area => `<span class="focus-tag">${area.trim()}</span>`)
+                        .join('');
+                }
+    
+                card.innerHTML = `
+                    <div class="organization">${scheme.organization || "Unknown Org"}</div>
+                    <h2 class="program-name">${scheme.program || "No Name"}</h2>
+                    <div class="focus-tags">${focusAreaTags || "No Focus Area"}</div>
+                    <div class="grant-amount">
+                        💰 Grant Amount: <strong>${scheme.grant_amount || "N/A"}</strong>
+                    </div>
+                    <div class="deadline">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2 2z"/>
+                        </svg>
+                        Deadline: ${scheme.deadline || "No Deadline"}
+                    </div>
+                    <div class="status-badge ${isClosed ? 'closed' : 'open'}">
+                        ${isClosed ? 'Closed' : 'Open'}
+                    </div>
+                    <div class="card-actions">
+                        <a href="${scheme.link || "#"}" class="apply-button" target="_blank" 
+                           ${isClosed ? 'disabled' : ''}>
+                            ${isClosed ? 'Closed' : 'Apply Now'}
+                        </a>
+                    </div>
+                `;
+    
+                schemesGrid.appendChild(card);
+            });
+        }
+    });
+
+    </script>
+    
+</body>
+
+</html>

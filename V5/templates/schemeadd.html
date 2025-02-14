@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Startup Schemes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: white;
+            color: black;
+            padding: 1.5rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            border: 2px solid black;
+        }
+
+        th, td {
+            padding: 8px;
+            border: 1px solid black;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+
+        /* Form & Upload Styling */
+        form, .upload-section {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border: 1px solid black;
+            border-radius: 6px;
+            background-color: white;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+
+        button {
+            background-color: black;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #333;
+        }
+
+        /* Pagination */
+        .pagination {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .pagination button {
+            padding: 6px 12px;
+            margin: 3px;
+            cursor: pointer;
+            border: 1px solid black;
+            background-color: white;
+        }
+
+        .pagination button.active {
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Startup Schemes</h2>
+
+        <!-- Form for Adding Scheme -->
+        <form id="schemeForm">
+            <label>Organization: <input type="text" id="organization" required></label>
+            <label>Program: <input type="text" id="program" required></label>
+            <label>Focus Area: <input type="text" id="focus_area" required></label>
+            <label>Grant Amount: <input type="text" id="grant_amount" required></label>
+            <label>Deadline: <input type="date" id="deadline" required></label>
+            <label>Link: <input type="url" id="link" required></label>
+            <button type="submit">Add Scheme</button>
+        </form>
+
+        <!-- CSV Upload & Download -->
+        <div class="upload-section">
+            <h2>Upload CSV</h2>
+            <input type="file" id="csvFile" accept=".csv">
+            <button onclick="uploadCSV()">Upload</button>
+            <button onclick="downloadCSV()">Download CSV</button>
+        </div>
+
+        <!-- Schemes Table -->
+        <h2>Available Schemes</h2>
+        <table id="schemesTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Organization</th>
+                    <th>Program</th>
+                    <th>Focus Area</th>
+                    <th>Grant Amount</th>
+                    <th>Deadline</th>
+                    <th>Link</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination"></div>
+    </div>
+
+    <script>
+        let schemes = [];
+        let currentPage = 1;
+        const rowsPerPage = 10;
+
+        document.getElementById("schemeForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+            const data = {
+                organization: document.getElementById("organization").value,
+                program: document.getElementById("program").value,
+                focus_area: document.getElementById("focus_area").value,
+                grant_amount: document.getElementById("grant_amount").value,
+                deadline: document.getElementById("deadline").value,
+                link: document.getElementById("link").value
+            };
+
+            const response = await fetch("/add-scheme", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                alert("Scheme added successfully!");
+                loadSchemes();
+            }
+        });
+
+        async function uploadCSV() {
+            const fileInput = document.getElementById("csvFile");
+            const file = fileInput.files[0];
+            if (!file) return alert("Please select a CSV file");
+
+            const formData = new FormData();
+            formData.append("file", file);
+
+            const response = await fetch("/upload-schemes-csv", {
+                method: "POST",
+                body: formData
+            });
+
+            if (response.ok) {
+                alert("CSV uploaded successfully!");
+                loadSchemes();
+            }
+        }
+
+        async function downloadCSV() {
+            const response = await fetch("/download-schemes-csv");
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "schemes.csv";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        async function loadSchemes() {
+            const response = await fetch("/schemes");
+            const data = await response.json();
+            schemes = data.schemes;
+            displaySchemes();
+        }
+
+        function displaySchemes() {
+            const tableBody = document.querySelector("#schemesTable tbody");
+            tableBody.innerHTML = "";
+
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            const paginatedSchemes = schemes.slice(start, end);
+
+            paginatedSchemes.forEach(scheme => {
+                const row = `<tr>
+                    <td>${scheme.id}</td>
+                    <td>${scheme.organization}</td>
+                    <td>${scheme.program}</td>
+                    <td>${scheme.focus_area}</td>
+                    <td>${scheme.grant_amount}</td>
+                    <td>${scheme.deadline}</td>
+                    <td><a href="${scheme.link}" target="_blank">Link</a></td>
+                </tr>`;
+                tableBody.innerHTML += row;
+            });
+
+            updatePagination();
+        }
+
+        function updatePagination() {
+            const paginationDiv = document.getElementById("pagination");
+            paginationDiv.innerHTML = "";
+            const totalPages = Math.ceil(schemes.length / rowsPerPage);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement("button");
+                button.textContent = i;
+                button.className = currentPage === i ? "active" : "";
+                button.onclick = () => {
+                    currentPage = i;
+                    displaySchemes();
+                };
+                paginationDiv.appendChild(button);
+            }
+        }
+
+        loadSchemes();
+    </script>
+</body>
+</html>

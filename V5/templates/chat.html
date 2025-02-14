@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Startup Classifier</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Add/modify these CSS rules in your existing style section */
+.boilerplate {
+    margin-bottom: 24px; /* Add space after the boilerplate */
+}
+
+/* OR */
+
+#submit {
+    margin-top: 24px; /* Add space before the button */
+}
+
+:root {
+    /* ... existing root variables ... */
+    --mobile-padding: 16px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+h1 {
+    font-size: 2rem; /* Slightly smaller on mobile */
+    margin-bottom: 16px;
+}
+
+.subtitle {
+    font-size: 1rem;
+    padding: 0 var(--mobile-padding);
+}
+
+.card {
+    padding: 16px;
+    margin: 0 -16px; /* Negative margin to make card full width on mobile */
+    border-radius: 0; /* Remove border radius on mobile */
+}
+
+textarea, input[type="email"] {
+    padding: 12px;
+    font-size: 16px; /* Prevent zoom on iOS */
+}
+
+button {
+    padding: 12px 24px;
+    font-size: 16px;
+}
+
+.examples-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+.example-card {
+    height: auto; /* Allow height to be flexible */
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .header {
+        margin-bottom: 20px;
+    }
+
+    h1 {
+        font-size: 1.75rem;
+    }
+
+    .card {
+        margin-bottom: 16px;
+    }
+
+    .boilerplate {
+        font-size: 0.9rem;
+        padding: 12px;
+    }
+
+    .form-group {
+        margin-bottom: 16px;
+    }
+}
+
+@media (min-width: 768px) {
+    .card {
+        margin: 0 0 24px 0;
+        border-radius: var(--border-radius);
+    }
+
+    .examples-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
+
+/* Add viewport meta tag if not already present */
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --background-color: #f8fafc;
+            --card-background: #ffffff;
+            --text-color: #1f2937;
+            --border-radius: 12px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--background-color);
+            padding: 20px;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--text-color);
+            margin-bottom: 16px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-color);
+        }
+
+        textarea, input[type="email"] {
+            width: 100%;
+            padding: 16px;
+            border-radius: var(--border-radius);
+            border: 2px solid #e5e7eb;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 180px;
+            resize: vertical;
+        }
+
+        textarea:focus, input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 16px 32px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .output {
+            margin-top: 24px;
+            padding: 20px;
+            background-color: #f8fafc;
+            border-radius: var(--border-radius);
+            border: 2px solid #e5e7eb;
+            font-size: 1rem;
+            display: none;
+        }
+
+        .output.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .email-form {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .email-form.active {
+            display: block;
+        }
+
+        .examples-section {
+            margin-top: 32px;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .example-card {
+            background-color: #f8fafc;
+            border: 2px solid #e5e7eb;
+            border-radius: var(--border-radius);
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            height: 180px;  /* Adjust to match the textarea height */
+        }
+
+        .example-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary-color);
+        }
+
+        .boilerplate {
+            margin-top: 24px;
+            padding: 16px;
+            background-color: #f8fafc;
+            border-radius: var(--border-radius);
+            border: 2px solid #e5e7eb;
+        }
+
+        .loading {
+            display: none;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .loading.active {
+            display: flex;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            color: #059669;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 20px 0;
+        }
+
+        .success-message.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Funding Finder for Startups</h1>
+            <p class="subtitle">Describe your startup, and let our AI quickly match you with the most relevant government funding and grants available for your business. Simple, fast, and tailored to your needs!</p>
+        </div>
+
+        <div class="card">
+            <div class="form-group">
+                <label for="startup_brief">Enter Startup Brief:</label>
+                <textarea 
+                    id="startup_brief" 
+                    placeholder="Describe your startup's mission, product/service, target market, and unique value proposition..."
+                    required
+                ></textarea>
+            </div>
+            <div class="boilerplate">
+                <strong>Boilerplate Format:</strong>
+                <p>[Company/Product Name] is developing a [hardware/software] solution in the [industry] sector. We are a team of [number] founders who are [graduates/working professionals/full-time founders]. Our company is [registered/unregistered] and [incubated/not incubated] at [incubator name, if applicable]. We are in the [stage: prototype/early product/beta/deployed] phase with a [working prototype/early product]. Our solution addresses [brief problem statement] through [brief explanation of technology]. We have [traction details, e.g., initial users, pilot programs, partnerships]. We seek support to [next milestone].</p>
+            </div>
+            <button id="submit">
+                <i class="fas fa-robot"></i>
+                Classify Startup
+            </button>
+
+            <div class="loading">
+                <i class="fas fa-circle-notch fa-2x spinner"></i>
+            </div>
+            <div class="success-message" id="success-message">
+                Best fit scheme found for you!
+            </div>
+            <div class="email-form" id="email-form">
+                <div class="form-group">
+                    <label for="email">Enter your email to view results:</label>
+                    <input type="email" id="email" placeholder="your@email.com" required>
+                </div>
+                <button id="submit-email">
+                    <i class="fas fa-envelope"></i>
+                    View Results
+                </button>
+            </div>
+            <div class="output" id="result"></div>
+            <br></br>
+            <button id="feedback-btn" onclick="toggleFeedbackForm()" >Please provide feedback to make this tool better</button>
+        </button>
+        
+        <!-- Feedback Form (Hidden by Default) -->
+        <div id="feedback-form" 
+            style="display: none; position: fixed; bottom: 70px; right: 20px; background: white; padding: 15px; border-radius: 8px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); width: 250px;">
+            <h4>Submit Feedback</h4>
+            <input type="email" id="feedback-email" placeholder="Your email" 
+                style="width: 100%; margin-bottom: 10px; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+            <textarea id="feedback-message" placeholder="Your feedback" 
+                style="width: 100%; margin-bottom: 10px; padding: 8px; border: 1px solid #ccc; border-radius: 4px;"></textarea>
+            <button onclick="submitFeedback()" 
+                style="width: 100%; background: #28a745; color: white; padding: 8px; border: none; border-radius: 4px; cursor: pointer;">
+                Submit
+            </button>
+            <p id="feedback-response" style="color: green; font-size: 12px; margin-top: 5px;"></p>
+        </div>
+        
+        <script>
+            function toggleFeedbackForm() {
+                var form = document.getElementById("feedback-form");
+                form.style.display = form.style.display === "none" ? "block" : "none";
+            }
+        
+            async function submitFeedback() {
+                var email = document.getElementById("feedback-email").value;
+                var message = document.getElementById("feedback-message").value;
+                var responseText = document.getElementById("feedback-response");
+        
+                if (!email || !message) {
+                    responseText.style.color = "red";
+                    responseText.innerText = "Please fill in all fields.";
+                    return;
+                }
+        
+                const response = await fetch("/submit-feedback", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, message })
+                });
+        
+                if (response.ok) {
+                    responseText.style.color = "green";
+                    responseText.innerText = "Feedback submitted successfully!";
+                    document.getElementById("feedback-email").value = "";
+                    document.getElementById("feedback-message").value = "";
+                    setTimeout(() => {
+                        document.getElementById("feedback-form").style.display = "none";
+                        responseText.innerText = "";
+                    }, 2000);
+                } else {
+                    responseText.style.color = "red";
+                    responseText.innerText = "Something went wrong. Try again.";
+                }
+            }
+        </script>
+        </div>
+
+        <div class="examples-section">
+            <h2>Example Prompts</h2>
+            <div class="examples-grid">
+                <div class="example-card" onclick="useExample(this)">
+                    <strong>Tech Startup</strong>
+                    <p>Our startup, HealthAI, is building an AI-driven health diagnostics platform combining machine learning and wearable sensor technology. Our team of three college graduates is currently in the prototype stage. The platform uses real-time data from wearable devices to predict potential health issues and offer personalized health recommendations. We are currently incubated at XYZ Incubator. We seek support to refine our prototype and expand our data processing capabilities.</p>
+                </div>
+                <div class="example-card" onclick="useExample(this)">
+                    <strong>Sustainable Startup</strong>
+                    <p>EcoPack is developing sustainable, biodegradable packaging materials to replace single-use plastics in the food and retail industry. Our team of four full-time founders, all college passouts, is in the proof-of-concept stage. We have a working prototype and are incubated at ABC Incubator. The solution reduces carbon footprints and promotes a greener planet. We seek funding to further test and scale production.</p>
+                </div>
+                <div class="example-card" onclick="useExample(this)">
+                    <strong>Student startup</strong>
+                    <p>EduPro is a student-led initiative aiming to build an AI-driven tutoring platform that helps students master complex subjects through personalized learning. The platform uses natural language processing and machine learning to adapt to each student’s learning style and pace. I am a college student and have gathered a small team of fellow students to work on the project. We are in the concept stage and need mentorship and funding to bring our idea to life, develop a prototype, and start testing in local schools.
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function useExample(element) {
+            const description = element.querySelector('p').textContent;
+            document.getElementById('startup_brief').value = description;
+        }
+
+        function showSuccessMessage() {
+            const successMessage = document.getElementById('success-message');
+            successMessage.classList.add('active');
+            setTimeout(() => {
+                successMessage.classList.remove('active');
+            }, 5000);  // Show for 5 seconds
+        }
+
+        function formatClassificationResult(data) {
+            const schemes = data.result.split(/\d+\.\s/).filter(Boolean);
+            const colors = ["#28a745", "#007bff", "#fd7e14", "#dc3545"]; // Green, Blue, Orange, Red
+
+            let formattedResult = "<h3>Classification Results - Most to least likely</h3><ul>";
+            schemes.forEach((scheme, index) => {
+                formattedResult += `<li style="color: ${colors[index] || '#000'}; font-weight: bold;">${scheme.trim()}</li>`;
+            });
+            formattedResult += "</ul>";
+
+            return formattedResult;
+        }
+
+        document.getElementById('submit').addEventListener('click', function() {
+            const brief = document.getElementById('startup_brief').value;
+            if (!brief.trim()) {
+                alert('Please enter a startup description');
+                return;
+            }
+
+            const loading = document.querySelector('.loading');
+            const button = document.getElementById('submit');
+            const emailForm = document.getElementById('email-form');
+
+            // Show loading state
+            loading.classList.add('active');
+            button.disabled = true;
+
+            fetch('/classify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ brief: brief })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerHTML = formatClassificationResult(data);
+                emailForm.classList.add('active');
+                showSuccessMessage();
+            })
+            .catch(error => {
+                alert('An error occurred. Please try again.');
+            })
+            .finally(() => {
+                loading.classList.remove('active');
+                button.disabled = false;
+            });
+        });
+
+        document.getElementById('submit-email').addEventListener('click', function() {
+            const email = document.getElementById('email').value;
+            if (!email.trim() || !email.includes('@')) {
+                alert('Please enter a valid email address');
+                return;
+            }
+
+            const brief = document.getElementById('startup_brief').value;
+
+            fetch('/save-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, brief: brief })
+            })
+            .then(response => response.json())
+            .then(data => {
+                showSuccessMessage();
+                setTimeout(() => {
+                    document.getElementById('email-form').classList.remove('active');
+                    document.getElementById('result').classList.add('active');
+                }, 1000);
+            })
+            .catch(error => {
+                alert('An error occurred while submitting your email. Please try again.');
+            });
+        });
+    </script>
+</body>
+

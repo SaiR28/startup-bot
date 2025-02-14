@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Perfect Funding Scheme</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        .container {
+            min-height: 100vh;
+            background-color: white;
+            padding: 2rem;
+        }
+
+        .content {
+            max-width: 1024px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .title {
+            font-size: 2.25rem;
+            font-weight: bold;
+            color: black;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: #666;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .cards {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .card {
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: white;
+            border: 2px solid black;
+        }
+
+        .card:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+                       0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: 2rem;
+            height: 2rem;
+            margin-right: 0.75rem;
+            color: black;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: black;
+        }
+
+        .card-description {
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+
+        .card-action {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            color: black;
+        }
+
+        .card-action svg {
+            margin-left: 0.5rem;
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover .card-action svg {
+            transform: translateX(4px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <header class="header">
+                <h1 class="title">Find Your Perfect Funding Scheme</h1>
+                <p class="subtitle">Discover the right funding opportunities tailored to your needs using our advanced tools</p>
+            </header>
+
+            <div class="cards">
+                <!-- Funding Schemes Card -->
+                <div class="card" onclick="handleCardClick('list')">
+                    <div class="card-header">
+                        <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
+                        </svg>
+                        <h2 class="card-title">Funding Schemes List</h2>
+                    </div>
+                    <p class="card-description">
+                        Browse through our comprehensive database of funding schemes. 
+                        Filter by sector, amount, and eligibility criteria to find 
+                        opportunities that match your requirements.
+                    </p>
+                    <div class="card-action">
+                        Explore Schemes
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- AI Assistant Card -->
+                <div class="card" onclick="handleCardClick('chat')">
+                    <div class="card-header">
+                        <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/>
+                        </svg>
+                        <h2 class="card-title">Funding AI Assistant</h2>
+                    </div>
+                    <p class="card-description">
+                        Let our AI-powered assistant guide you to the perfect funding opportunity. 
+                        Answer a few questions about your project, and we'll recommend the most 
+                        suitable schemes for you.
+                    </p>
+                    <div class="card-action">
+                        Start AI Search
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleCardClick(option) {
+            window.location.href = `/${option}`;
+        }
+    </script>
+</body>
+</html>
