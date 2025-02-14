@@ -141,9 +141,14 @@ def log_to_db(ip_address: str, prompt: str, output: str, email: str = None):
 async def read_root():
     with open('templates/landing.html', 'r') as f:
         return f.read()
+    
 @app.get("/addscheme")
 def serve_schemes_page(request: Request):
     return templates.TemplateResponse("schemeadd.html", {"request": request})
+@app.get("/admin")
+def serve_schemes_page(request: Request):
+    return templates.TemplateResponse("admin.html", {"request": request})
+
 @app.get("/chat")
 def serve_schemes_page(request: Request):
     return templates.TemplateResponse("chat.html", {"request": request})

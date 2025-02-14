@@ -349,7 +349,7 @@ body {
     
             if (emailInput) {
                 try {
-                    const response = await fetch("http://localhost:8000/save-email", {
+                    const response = await fetch("/save-email", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ email: emailInput }),
@@ -451,7 +451,7 @@ body {
     
         async function fetchSchemes() {
             try {
-                const response = await fetch("http://localhost:8000/schemes");
+                const response = await fetch("/schemes");
                 if (!response.ok) throw new Error("Failed to fetch schemes");
     
                 const data = await response.json();

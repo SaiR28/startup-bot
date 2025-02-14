@@ -527,6 +527,20 @@ button {
                 alert('An error occurred while submitting your email. Please try again.');
             });
         });
+        document.addEventListener("DOMContentLoaded", function () {
+    const textarea = document.getElementById("startup_brief");
+    const submitButton = document.getElementById("submit");
+    
+    submitButton.addEventListener("click", function (event) {
+        let text = textarea.value.trim();
+        let wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
+
+        if (wordCount < 20) {
+            event.preventDefault(); // Prevent form submission
+            alert("Please enter more then 20 words.");
+        }
+    });
+});
     </script>
 </body>
 
